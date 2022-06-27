@@ -33,27 +33,27 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-    var user_score = 0;
-    var comp_score = 0;
-    for (let i = 0; i < 5; i++) {
-        var user_pick = prompt("Rock, paper, or scissors?")
-        var winner = playRound(user_pick, computerPlay());
-        if (winner.includes("win")) {
-            user_score += 1;
-        } else if (winner.includes("lose")) {
-            comp_score += 1;
-        }
-        console.log(winner);
-        console.log("Current score: " + user_score + " - " + comp_score);
+  const buttons = document.querySelectorAll('button')
+  var user_score = 0;
+  var comp_score = 0;
+  buttons.forEach(button => button.addEventListener('click', () => {
+    winner = playRound(button.getAttribute('data-move'), computerPlay());
+    document.getElementById('results').textContent = winner;
+    if (winner.includes("win")) {
+        user_score += 1;
+    } else if (winner.includes("lose")) {
+        comp_score += 1;
     }
-    if (user_score > comp_score) {
-        console.log("You win!");
-    } else if (comp_score > user_score) {
-        console.log("You lose!")
-    } else {
-        console.log("You tied!")
+    document.getElementById('score').textContent = user_score + ' - ' + comp_score;
+    if (user_score == 5 || comp_score == 5) {
+      if (user_score == 5) {alert("You win!")}
+      if (comp_score == 5) {alert("You lose!")}
+      user_score = 0;
+      comp_score = 0;
+      document.getElementById('results').textContent = "Let's play rock, paper, scissors!";
+      document.getElementById('score').textContent = user_score + ' - ' + comp_score;
     }
-    console.log("Final score: " + user_score + " - " + comp_score);
+    }));
 }
 
 game();
